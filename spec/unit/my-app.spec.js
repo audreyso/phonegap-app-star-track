@@ -17,7 +17,11 @@ describe('my-app.js', function() {
       searchSubmit(event);
       expect(event.preventDefault).toHaveBeenCalled();
     });
-    it('should alert if no formdata exists / was entered');
+    it('should alert if no formdata exists / was entered', function() {
+      spyOn(myApp, 'alert');
+      searchSubmit(event);
+      expect(myApp.alert).toHaveBeenCalledWith('Please enter a search term', jasmine.any(String));
+    });
     it('should make a request to the spotify API');
     it('should load spotify API results into the main view router');
     it('should alert if there was an error with the spotify API');
