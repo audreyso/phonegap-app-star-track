@@ -7,7 +7,7 @@
     "url": "git+https://github.com/phonegap/phonegap-app-star-track.git"
   },
   "scripts": {
-    "test": "karma start spec/karma.conf"
+    "test": "karma start spec/unit/karma.conf.js"
   },
   "author": "Tommy-Carlos Williams",
   "license": "Apache-2.0",

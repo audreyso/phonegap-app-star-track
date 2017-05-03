@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '..',
+    basePath: '../..',
 
 
     // frameworks to use
@@ -15,13 +15,10 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'www/lib/framework7/js/framework7.js',
+      'www/js/my-app.js',
       'spec/unit/**/*spec.js'
     ],
-/*
-    proxies: {
-       '/': 'http://localhost:3000'
-    },
-*/
 
     // list of files to exclude
     exclude: [
@@ -53,7 +50,7 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
     // start these browsers
@@ -63,7 +60,7 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: true,
+    singleRun: false,
 
     // Concurrency level
     // how many browser should be started simultaneous
