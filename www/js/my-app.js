@@ -13,8 +13,8 @@ var mainView;
 // A template helper to turn ms durations to mm:ss
 // We need to be able to pad to 2 digits
 function pad2(number) {
-  if (number <= 99) { number = ('0' + number).slice(-2); }
-  return number;
+  if (number < 10) { number = ('0' + number).slice(-2); }
+  return '' + number;
 }
 
 // Now the actual helper to turn ms to [hh:]mm:ss
