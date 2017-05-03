@@ -13,7 +13,10 @@ describe('my-app.js', function() {
     beforeEach(function() {
       event = jasmine.createSpyObj('fake event', ['preventDefault']);
     });
-    it('it should always prevent default event propagation');
+    it('it should always prevent default event propagation', function() {
+      searchSubmit(event);
+      expect(event.preventDefault).toHaveBeenCalled();
+    });
     it('should alert if no formdata exists / was entered');
     it('should make a request to the spotify API');
     it('should load spotify API results into the main view router');
