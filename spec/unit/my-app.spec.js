@@ -57,6 +57,14 @@ describe('my-app.js', function() {
       });
       expect(fake_results.tracks.count).toEqual(fake_results.tracks.items.length);
     });
-    it('should alert if there was an error with the spotify API');
+    it('should alert if there was an error with the spotify API', function() {
+      spyOn($$, 'ajax').and.callFake(function(obj) {
+        obj.error({}, 'uh oh!');
+      });
+      spyOn(myApp, 'formToJSON').and.returnValue({q: 'elvis'});
+      spyOn(myApp, 'alert');
+      searchSubmit(event);
+      expect(myApp.alert).toHaveBeenCalledWith('An error has occurred', 'Search Error');
+    });
   });
 });
