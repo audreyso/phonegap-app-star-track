@@ -7,12 +7,10 @@
     "url": "git+https://github.com/phonegap/phonegap-app-star-track.git"
   },
   "scripts": {
-    "build": "phonegap build",
-    "build:ios": "phonegap build ios",
-    "build:android": "phonegap build android",
     "unit": "karma start spec/unit/karma.conf.js",
     "e2e": "node spec/e2e/runner.js",
-    "e2e:ios": "node spec/e2e/runner.js --env ios"
+    "e2e:ios": "node spec/e2e/runner.js --env ios",
+    "e2e:android": "node spec/e2e/runner.js --env android"
   },
   "author": "Tommy-Carlos Williams",
   "license": "Apache-2.0",
@@ -31,7 +29,7 @@
   },
   "devDependencies": {
     "appium": "1.6.4",
-    "chromedriver": "^2.29.0",
+    "chromedriver": "2.24.0",
     "jasmine-core": "^2.6.1",
     "karma": "^1.6.0",
     "karma-chrome-launcher": "^2.1.0",
