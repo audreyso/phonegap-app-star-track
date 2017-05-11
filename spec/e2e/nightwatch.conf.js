@@ -2,6 +2,7 @@ var path = require('path');
 
 module.exports = {
   "src_folders" : ["spec/e2e/tests"],
+  "output_folder": false,
   "custom_commands_path" : "",
   "custom_assertions_path" : "",
   "page_objects_path" : "",
