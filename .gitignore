@@ -1,6 +1,10 @@
 platforms/
 plugins/
 
+# unit/e2e test reports
+reports/
+node_modules/
+
 Thumbs.db
 *.DS_Store
 
