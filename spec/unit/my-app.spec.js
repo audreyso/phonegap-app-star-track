@@ -8,6 +8,12 @@ describe('my-app.js', function() {
     });
   });
 
+  describe('durationFromMsHelper', function() {
+    it('should return the empty string if you dont give it a number', function() {
+      expect(durationFromMsHelper('poop')).toEqual('');
+    });
+  });
+
   describe('searchSubmit function', function() {
     var event;
     var original_mainView;
