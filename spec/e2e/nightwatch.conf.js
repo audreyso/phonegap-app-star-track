@@ -24,6 +24,37 @@ module.exports = {
       "desiredCapabilities": {
         "browserName": "chrome"
       }
+    },
+    "ios" : {
+      "selenium_start_process": false,
+      "selenium_port" : 4723,
+      "selenium_host" : "127.0.0.1",
+      "globals": {
+        "env": "ios",
+        "asyncHookTimeout": 60000
+      },
+      "desiredCapabilities" : {
+        "platformName" : "iOS",
+        "platformVersion" : "10.3",
+        "deviceName" : "iPhone 6s Plus",
+        "app": path.join(__dirname, '..', '..', 'platforms', 'ios', 'build', 'emulator', 'Star Track.app')
+      }
+    },
+    "android" : {
+      "selenium_start_process": false,
+      "selenium_port" : 4723,
+      "selenium_host" : "127.0.0.1",
+      "globals": {
+        "env": "android",
+        "asyncHookTimeout": 60000
+      },
+      "desiredCapabilities" : {
+        "browserName": "",
+        "platformName": "Android",
+        "platformVersion": "7.1",
+        "deviceName": "Pixel_API_25",
+        "app": path.join(__dirname, '..', '..', 'platforms', 'android', 'build', 'outputs', 'apk', 'android-debug.apk')
+      }
     }
   }
 }
