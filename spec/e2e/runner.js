@@ -40,7 +40,7 @@ if (args.env && (args.env == 'ios' || args.env == 'android')) {
   var startup_timeout = setTimeout(function() {
     console.error('Appium not ready after 5 seconds. Closing down. Your appium instance probably has issues! Check the logs in this output');
     appium.kill();
-  }, 5000);
+  }, 10000);
   appium.stdout.on('data', function(data) {
     var out = data.toString();
     if (out.indexOf('listener started') > -1) {
