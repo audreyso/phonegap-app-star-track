@@ -38,7 +38,7 @@ if (args.env && (args.env == 'ios' || args.env == 'android')) {
   console.log('Starting appium...');
   appium = spawn(path.join('node_modules', 'appium', 'build', 'lib', 'main.js'), ['--chromedriver-executable', require('chromedriver').path]);
   var startup_timeout = setTimeout(function() {
-    console.error('Appium not ready after 5 seconds. Closing down. Your appium instance probably has issues! Check the logs in this output');
+    console.error('Appium not ready after 10 seconds. Closing down. Your appium instance probably has issues! Check the logs in this output');
     appium.kill();
   }, 10000);
   appium.stdout.on('data', function(data) {

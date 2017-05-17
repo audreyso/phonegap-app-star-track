@@ -20,7 +20,7 @@ module.exports = {
       waitForElementVisible('#query', 5000).
       setValue('#query', 'slim shady').
       submitForm('form#search').
-      pause(1000).
+      pause(2000).
       assert.containsText('div.item-subtitle', 'Eminem');
   }
 };
