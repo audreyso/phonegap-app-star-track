@@ -18,9 +18,12 @@ module.exports = {
   'should show basic results': function(app) {
     app.
       waitForElementVisible('#query', 5000).
+      pause(2000).
       setValue('#query', 'slim shady').
+      pause(2000).
       submitForm('form#search').
       pause(2000).
-      assert.containsText('div.item-subtitle', 'Eminem');
+      assert.containsText('div.item-subtitle', 'Eminem').
+      pause(2000);
   }
 };

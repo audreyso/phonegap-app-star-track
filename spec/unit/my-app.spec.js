@@ -18,7 +18,7 @@ describe('my-app.js', function() {
     afterEach(function() {
       mainView = original_mainView;
     });
-    it('it should always prevent default event propagation', function() {
+    it('should always prevent default event propagation', function() {
       searchSubmit(event);
       expect(event.preventDefault).toHaveBeenCalled();
     });
