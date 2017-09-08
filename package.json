@@ -6,6 +6,13 @@
     "type": "git",
     "url": "git+https://github.com/phonegap/phonegap-app-star-track.git"
   },
+  "scripts": {
+    "cover": "codecov",
+    "unit": "karma start spec/unit/karma.conf.js",
+    "e2e": "node spec/e2e/runner.js",
+    "e2e:ios": "node spec/e2e/runner.js --env ios",
+    "e2e:android": "node spec/e2e/runner.js --env android"
+  },
   "author": "Tommy-Carlos Williams",
   "license": "Apache-2.0",
   "keywords": [
@@ -17,5 +24,23 @@
   "bugs": {
     "url": "https://github.com/phonegap/phonegap-app-star-track/issues"
   },
-  "homepage": "https://github.com/phonegap/phonegap-app-star-track#readme"
+  "homepage": "https://github.com/phonegap/phonegap-app-star-track#readme",
+  "dependencies": {
+    "cordova": "^6.5.0"
+  },
+  "devDependencies": {
+    "appium": "1.6.4",
+    "chromedriver": "2.24.0",
+    "codecov": "^2.2.0",
+    "jasmine-core": "^2.6.1",
+    "karma": "^1.6.0",
+    "karma-coverage": "^1.1.1",
+    "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-spec-reporter": "0.0.31",
+    "nightwatch": "^0.9.15",
+    "phonegap": "^6.5.0",
+    "selenium-server": "^3.4.0",
+    "yargs": "^8.0.1"
+  }
 }
