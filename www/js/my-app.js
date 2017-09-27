@@ -8,6 +8,8 @@ Template7.global = {
   ios: isIos,
 };
 
+var mainView;
+
 // A template helper to turn ms durations to mm:ss
 // We need to be able to pad to 2 digits
 function pad2(number) {
@@ -64,43 +66,45 @@ var myApp = new Framework7({
   pushState: !!Framework7.prototype.device.os,
 });
 
-// Add view
-var mainView = myApp.addView('.view-main', {
-  // Because we want to use dynamic navbar, we need to enable it for this view:
-  dynamicNavbar: true,
-  domCache: true,
-});
+function init() {
+  // Add view
+  mainView = myApp.addView('.view-main', {
+    // Because we want to use dynamic navbar, we need to enable it for this view:
+    dynamicNavbar: true,
+    domCache: true,
+  });
 
-// Handle Cordova Device Ready Event
-$$(document).on('deviceready', function deviceIsReady() {
-  console.log('Device is ready!');
-});
+  // Handle Cordova Device Ready Event
+  $$(document).on('deviceready', function deviceIsReady() {
+    console.log('Device is ready!');
+  });
+  $$(document).on('click', '.panel .search-link', function searchLink() {
+    // Only change route if not already on the index
+    //  It would be nice to have a better way of knowing this...
+    var indexPage = $$('.page[data-page=index]');
+    if (indexPage.hasClass('cached')) {
+      mainView.router.load({
+        pageName: 'index',
+        animatePages: false,
+        reload: true,
+      });
+    }
+  });
 
-$$(document).on('click', '.panel .search-link', function searchLink() {
-  // Only change route if not already on the index
-  //  It would be nice to have a better way of knowing this...
-  var indexPage = $$('.page[data-page=index]');
-  if (indexPage.hasClass('cached')) {
+  $$(document).on('click', '.panel .favorites-link', function searchLink() {
+    // @TODO fetch the favorites (if any) from localStorage
+    var favorites = JSON.parse(localStorage.getItem('favorites'));
     mainView.router.load({
-      pageName: 'index',
+      template: myApp.templates.favorites,
       animatePages: false,
+      context: {
+        tracks: favorites,
+      },
       reload: true,
     });
-  }
-});
-
-$$(document).on('click', '.panel .favorites-link', function searchLink() {
-  // @TODO fetch the favorites (if any) from localStorage
-  var favorites = JSON.parse(localStorage.getItem('favorites'));
-  mainView.router.load({
-    template: myApp.templates.favorites,
-    animatePages: false,
-    context: {
-      tracks: favorites,
-    },
-    reload: true,
   });
-});
+  $$(document).on('submit', '#search', searchSubmit);
+}
 
 /**
  * Search
@@ -110,32 +114,34 @@ $$(document).on('click', '.panel .favorites-link', function searchLink() {
 function searchSubmit(e) {
   var formData = myApp.formToJSON('#search');
   e.preventDefault();
-  if (!formData.q) {
+  if (!formData.term) {
     myApp.alert('Please enter a search term', 'Search Error');
     return;
   }
 
   if (formData.filter === 'all') {
-    formData.q = formData.q.trim();
+    formData.term = formData.term.trim();
   } else {
-    formData.q = formData.filter + ':' + formData.q.trim();
+    formData.term = formData.filter + ':' + formData.term.trim();
   }
   delete formData.filter;
-  formData.type = 'track';
+  formData.media = 'music';
   $$('input').blur();
   myApp.showPreloader('Searching');
   $$.ajax({
     dataType: 'json',
     data: formData,
     processData: true,
-    url: 'https://api.spotify.com/v1/search',
+    url: 'https://itunes.apple.com/search',
     success: function searchSuccess(resp) {
-      resp.tracks.count = resp.tracks.items.length === 25 ? "25 (max)" : resp.tracks.items.length;
+      var results = { count: 0 };
+      results.count = resp.resultCount === 25 ? "25 (max)" : resp.resultCount;
+      results.items = resp.results;
       myApp.hidePreloader();
       mainView.router.load({
         template: myApp.templates.results,
         context: {
-          tracks: resp.tracks,
+          tracks: results,
         },
       });
     },
@@ -148,7 +154,6 @@ function searchSubmit(e) {
   });
 }
 
-$$(document).on('submit', '#search', searchSubmit);
 
 /**
  * Details page
@@ -288,7 +293,7 @@ function addOrRemoveFavorite(e) {
 }
 
 myApp.onPageInit('details', function(page) {
-  var previewUrl = page.context.preview_url;
+  var previewUrl = page.context.previewUrl;
   if (typeof Media !== 'undefined') {
     // Create media object on page load so as to let it start buffering right
     //  away...

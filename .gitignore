@@ -1,6 +1,12 @@
 platforms/
 plugins/
 
+# unit/e2e test reports
+reports/
+coverage/
+node_modules/
+.cordova
+
 Thumbs.db
 *.DS_Store
 
