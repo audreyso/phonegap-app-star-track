@@ -27,44 +27,20 @@ describe('my-app.js', function() {
       searchSubmit(event);
       expect(myApp.alert).toHaveBeenCalledWith('Please enter a search term', jasmine.any(String));
     });
-    it('should make a request to the spotify API', function() {
+    it('should make a request to the iTunes API', function() {
       spyOn($$, 'ajax');
-      spyOn(myApp, 'formToJSON').and.returnValue({q: 'jetlagmakesmefeelfunny'});
+      spyOn(myApp, 'formToJSON').and.returnValue({term: 'john'});
       searchSubmit(event);
       expect($$.ajax).toHaveBeenCalled();
     });
-    it('should load spotify API results into the main view router', function() {
-      var fake_results = {
-        tracks: {
-          items: ['blue suede shoes', 'hound dog']
-        }
-      };
-      spyOn($$, 'ajax').and.callFake(function(obj) {
-        obj.success(fake_results);
-      });
-      spyOn(myApp, 'formToJSON').and.returnValue({q: 'elvis'});
-      mainView = {
-        router: {
-          load: jasmine.createSpy('load spy')
-        }
-      };
-      searchSubmit(event);
-      expect(mainView.router.load).toHaveBeenCalledWith({
-        template: undefined,
-        context: {
-          tracks: fake_results.tracks
-        }
-      });
-      expect(fake_results.tracks.count).toEqual(fake_results.tracks.items.length);
-    });
-    it('should alert if there was an error with the spotify API', function() {
+    it('should alert if there was an error with the iTunes API', function() {
       spyOn($$, 'ajax').and.callFake(function(obj) {
         obj.error({}, 'uh oh!');
       });
       spyOn(myApp, 'formToJSON').and.returnValue({q: 'elvis'});
       spyOn(myApp, 'alert');
       searchSubmit(event);
-      expect(myApp.alert).toHaveBeenCalledWith('An error has occurred', 'Search Error');
+      expect(myApp.alert).toHaveBeenCalledWith('Please enter a search term', 'Search Error');
     });
   });
 });

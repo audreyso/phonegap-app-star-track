@@ -13,8 +13,8 @@ var mainView;
 // A template helper to turn ms durations to mm:ss
 // We need to be able to pad to 2 digits
 function pad2(number) {
-  if (number < 10) { number = ('0' + number).slice(-2); }
-  return '' + number;
+  if (number <= 99) { number = ('0' + number).slice(-2); }
+  return number;
 }
 
 // Now the actual helper to turn ms to [hh:]mm:ss
@@ -114,32 +114,34 @@ function init() {
 function searchSubmit(e) {
   var formData = myApp.formToJSON('#search');
   e.preventDefault();
-  if (!formData.q) {
+  if (!formData.term) {
     myApp.alert('Please enter a search term', 'Search Error');
     return;
   }
 
   if (formData.filter === 'all') {
-    formData.q = formData.q.trim();
+    formData.term = formData.term.trim();
   } else {
-    formData.q = formData.filter + ':' + formData.q.trim();
+    formData.term = formData.filter + ':' + formData.term.trim();
   }
   delete formData.filter;
-  formData.type = 'track';
+  formData.media = 'music';
   $$('input').blur();
   myApp.showPreloader('Searching');
   $$.ajax({
     dataType: 'json',
     data: formData,
     processData: true,
-    url: 'https://api.spotify.com/v1/search',
+    url: 'https://itunes.apple.com/search',
     success: function searchSuccess(resp) {
-      resp.tracks.count = resp.tracks.items.length === 25 ? "25 (max)" : resp.tracks.items.length;
+      var results = { count: 0 };
+      results.count = resp.resultCount === 25 ? "25 (max)" : resp.resultCount;
+      results.items = resp.results;
       myApp.hidePreloader();
       mainView.router.load({
         template: myApp.templates.results,
         context: {
-          tracks: resp.tracks,
+          tracks: results,
         },
       });
     },
@@ -291,7 +293,7 @@ function addOrRemoveFavorite(e) {
 }
 
 myApp.onPageInit('details', function(page) {
-  var previewUrl = page.context.preview_url;
+  var previewUrl = page.context.previewUrl;
   if (typeof Media !== 'undefined') {
     // Create media object on page load so as to let it start buffering right
     //  away...
